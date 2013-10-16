@@ -1,4 +1,5 @@
 codeforces
 ==========
 
-some code in codeforces
+* 记录自己做题的过程
+* 监督一下 不想再荒废而已
