@@ -17,9 +17,7 @@ long long count(int num)
         if (cur < num) cnt += high * w;
         if (cur == num) cnt += high * w + low + 1;
         if (cur > num) cnt += (high + 1) * w;
-        if (num == 0) {
-            cnt -= w;
-        }
+        if (num == 0) cnt -= w;
     }
     return cnt;
 }
