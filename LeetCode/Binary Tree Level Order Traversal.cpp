@@ -28,19 +28,13 @@ private:
 		if (root->right) dfs(root->right, level + 1);
 	}
 public:
-	vector<vector<int> > levelOrderBottom(TreeNode *root) {
-		vector<vector<int> > ret;
-		vector<vector<int> >::iterator it;
-
+	vector<vector<int> > levelOrder(TreeNode *root) {
 		if (!root)
-			return ret;
+			return traversal;
 
 		dfs(root, 0);
 
-		for(it = traversal.end() - 1; it >= traversal.begin(); it--)
-			ret.push_back(*it);
-
-		return ret;
+		return traversal;
 	}
 };
 
@@ -62,7 +56,7 @@ int main()
 	n2.left = &n3;
 	n2.right = &n4;
 
-	v = sol.levelOrderBottom(&root);
+	v = sol.levelOrder(&root);
 
 	for(it = v.begin(); it < v.end(); it++) {
 		for(i = (*it).begin(); i < (*it).end(); i++)
