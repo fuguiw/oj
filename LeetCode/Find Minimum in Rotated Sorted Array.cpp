@@ -18,14 +18,10 @@ public:
 
 		while (start < end) {
 			mid = (start + end) / 2;
-			if (num[mid] <= num[len - 1]) {
-				if (mid > 0 && num[mid - 1] > num[mid])
-					return num[mid];
-				end = mid - 1;
-			}
-			if (num[mid] >= num[0]) {
+			if (num[mid] < num[len - 1])
+				end = mid;
+			else 
 				start = mid + 1;
-			}
 		}
 		return num[start];
     }
@@ -36,7 +32,6 @@ int main()
 	vector<int> num;
 	Solution sol;
 
-	num.push_back(2);
 	num.push_back(3);
 	num.push_back(1);
 
