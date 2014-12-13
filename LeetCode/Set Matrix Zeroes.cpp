@@ -9,8 +9,8 @@ public:
 		m = matrix[0].size();
 		row = col = 1;
 
-		for (i = 0; i < n; i++) col &&= matrix[i][0];
-		for (i = 0; i < m; i++) row &&= matrix[0][i];
+		for (i = 0; i < n; i++) col = col && matrix[i][0];
+		for (i = 0; i < m; i++) row = row && matrix[0][i];
 
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < m; j++) {
