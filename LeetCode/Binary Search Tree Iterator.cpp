@@ -1,4 +1,4 @@
-#include <stack>
+#include <queue>
 #include <iostream>
 using namespace std;
 
@@ -14,25 +14,30 @@ struct TreeNode {
 
 class BSTIterator {
 public:
-    stack<TreeNode *> s;
+    queue<TreeNode *> q;
+
+    void f(TreeNode *r) {
+        if (r == NULL)
+            return ;
+
+        f(r->left);
+        q.push(r);
+        f(r->right);
+    }
 
     BSTIterator(TreeNode *root) {
-        for (; root; root = root->left)
-            s.push(root);
+        f(root);
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-        return !s.empty();
+        return !q.empty();
     }
 
     /** @return the next smallest number */
     int next() {
-        TreeNode *n = s.top();
-        s.pop();
-
-        for (TreeNode *t = n->right; t; t = t->left)
-            s.push(t);
+        TreeNode *n = q.front();
+        q.pop();
 
         return n->val;
     }
@@ -61,3 +66,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
