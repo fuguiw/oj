@@ -2,68 +2,50 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) : val(x), next(NULL) {}
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
 class Solution {
 public:
-	ListNode *detectCycle(ListNode *head) {
-		ListNode *p1, *p2;
-		int c1, c2;
+    ListNode *detectCycle(ListNode *head) {
+        ListNode *slow = head;
+        ListNode *fast = head;
 
-		for (p1 = p2 = head, c1 = 1; ;) {
-			if (!p2) return NULL;
-			p2 = p2->next;
-			if (!p2) return NULL;
-			if (p1 == p2) break;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+                break;
+        }
 
-			p2 = p2->next;
-			p1 = p1->next;
-			++c1;
-			if (!p2) return NULL;
-			if (p1 == p2) break;
-		}
+        if (fast == nullptr || fast->next == nullptr)
+            return nullptr;
 
-		
-		for (p2 = p2->next, c2 = 1; p2->next != p1->next; ++c2, p2 = p2->next) ;
-		
+        for (fast = head; fast != slow; fast = fast->next, slow = slow->next);
 
-		p2 = p1->next;
-		p1 = head;
-		if (c1 > c2) {
-			for (int tmp = c1 - c2; tmp > 0; --tmp, p1 = p1->next) ;
-		} else {
-			for (int tmp = c2 - c1; tmp > 0; --tmp, p2 = p2->next) ;
-		}
-
-		for (; ; p1 = p1->next, p2 = p2->next) {
-			if (p1 == p2)
-				return p1;
-		}
-
-		return NULL;
+        return fast;
     }
 };
 
 int main()
 {
-	Solution sol;
-	ListNode n1(1);
-	ListNode n2(2);
-	ListNode n3(3);
-	ListNode n4(4);
-	ListNode *np;
+    Solution sol;
+    ListNode n1(1);
+    ListNode n2(2);
+    ListNode n3(3);
+    ListNode n4(4);
+    ListNode *np;
 
-	n1.next = &n2;
-	n2.next = &n3;
-	n3.next = &n4;
-	n4.next = &n1;
+    n1.next = &n2;
+    n2.next = &n3;
+    n3.next = &n4;
+    n4.next = &n1;
 
-	np = sol.detectCycle(&n1);
-	cout << np->val << endl;
+    np = sol.detectCycle(&n1);
+    cout << np->val << endl;
 
-	return 0;
+    return 0;
 }
 
