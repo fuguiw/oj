@@ -9,26 +9,26 @@
 class Solution {
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n) {
+        int i;
+        return do_remove(head, n, i);
+    }
+private:
+    ListNode *do_remove(ListNode *head, int n, int& i) {
+        if (head == nullptr) {
+            i = 0;
+            return head;
+        }
 
-		if (!head) return head;
+        head->next = do_remove(head->next, n, i);
+        ++i;
 
-		ListNode *end = head;
-		ListNode *curr = head;
+        if (i == n) {
+            ListNode *tmp = head->next;
+            free(head);
+            return tmp;
+        }
 
-		for (int i = 0; i < n; i++) {
-			if (!end->next) {
-				return head->next;
-			}
-			end = end->next;
-		}
-
-		for (; end->next; ) {
-			end = end->next;
-			curr = curr->next;
-		}
-
-		curr->next = curr->next->next;
-		return head;
+        return head;
     }
 };
 
