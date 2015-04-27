@@ -12,51 +12,24 @@ struct ListNode {
 class Solution {
 public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-        ListNode *p1, *p2, *h;
-        int c = 0;
+        return do_add(l1, l2, 0);
+    }
 
-        p2 = l2;
+private:
+    ListNode *do_add(ListNode *l1, ListNode *l2, int carry) {
+        if (l1 == nullptr && l2 == nullptr && carry == 0)
+            return nullptr;
 
-        for (h = p1 = l1; l1 && l2; l1 = l1->next, l2 = l2->next) {
-            p1->val = l1->val + l2->val + c;
-            c = p1->val / 10;
-            p1->val %= 10;
+        ListNode *node = new ListNode(0);
+        if (l1) node->val += l1->val;
+        if (l2) node->val += l2->val;
+        node->val += carry;
 
-            if (l1->next && l2->next)
-                p1 = p1->next;
-        }
+        carry = node->val / 10;
+        node->val %= 10;
 
-        if (l2)
-            p1->next = l2;
-
-        if (l1 || l2) {
-            p1 = p1->next;
-            p1->val += c;
-            c = p1->val / 10;
-            p1->val %= 10;
-            if (c && !p1->next) {
-                p1->next = p2;
-                p2->val = 0;
-                p2->next = NULL;
-            }
-            p1 = p1->next;
-        }
-
-        for (; p1; p1 = p1->next) {
-            if (l1 || l2) {
-                p1->val += c;
-                c = p1->val / 10;
-                p1->val %= 10;
-            }
-            if (c && !p1->next) {
-                p1->next = p2;
-                p2->val = 1;
-                p2->next = NULL;
-                break;
-            }
-        }
-
-        return h;
+        node->next = do_add(l1 ? l1->next : nullptr, l2 ? l2->next : nullptr, carry);
+        return node;
     }
 };
 
