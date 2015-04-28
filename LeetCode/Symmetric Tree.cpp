@@ -5,66 +5,51 @@ using namespace std;
  * Definition for binary tree
  */
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
 class Solution {
 private:
-	bool is_symmetric(TreeNode *ltree, TreeNode *rtree)
-	{
-		bool ret;
-		if (ltree->val != rtree->val)
-			return false;
-		if (ltree->left && rtree->right){
-			ret = is_symmetric(ltree->left, rtree->right);
-			if (!ret) return false;
-		} else if (!ltree->left && !rtree->right) {
-			ret = true;
-		} else {
-			return false;
-		}
-		if (ltree->right && rtree->left){
-			ret = is_symmetric(ltree->right, rtree->left);
-			if (!ret) return false;
-		} else if (!ltree->right && !rtree->left) {
-			ret = true;
-		} else {
-			return false;
-		} 
-		return true;
-	}
+    bool isSymmetric(TreeNode *ltree, TreeNode *rtree) {
+        if (ltree == nullptr && rtree == nullptr)
+            return true;
+
+        if (ltree && rtree)
+            return (ltree->val == rtree->val) 
+                && isSymmetric(ltree->left, rtree->right)
+                && isSymmetric(ltree->right, rtree->left);
+
+        return false;
+    }
+
 public:
-	bool isSymmetric(TreeNode *root) {
-		if (!root) 
-			return true;
-		if (!root->left && !root->right) 
-			return true;
-		if (root->left && root->right) 
-			return is_symmetric(root->left, root->right);
-		return false;
-	}
+    bool isSymmetric(TreeNode *root) {
+        if (root == nullptr) 
+            return true;
+        return isSymmetric(root->left, root->right);
+    }
 };
 
 int main()
 {
-	Solution sol;
-	TreeNode root(2);
-	TreeNode n1(3);
-	TreeNode n2(3);
-	TreeNode n3(4);
-	TreeNode n4(4);
-	TreeNode n5(5);
+    Solution sol;
+    TreeNode root(2);
+    TreeNode n1(3);
+    TreeNode n2(3);
+    TreeNode n3(4);
+    TreeNode n4(4);
+    TreeNode n5(5);
 
-	root.left = &n1;
-	root.right = &n2;
-	n1.left = &n3;
-	n2.right = &n4;
-	/* n2.right = &n4; */
+    root.left = &n1;
+    root.right = &n2;
+    n1.left = &n3;
+    n2.right = &n4;
+    /* n2.right = &n4; */
 
-	cout << sol.isSymmetric(&root) << endl;
+    cout << sol.isSymmetric(&root) << endl;
 
-	return 0;
+    return 0;
 }
