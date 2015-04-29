@@ -3,25 +3,22 @@
 using namespace std;
 
 class Solution {
-    void subset(vector<vector<int>> &vv, vector<int> &v, vector<int> &s, vector<int>::size_type i) {
-        if (i == s.size()) {
-            vv.push_back(v);
-            return ;
-        }
-
-        subset(vv, v, s, i + 1);
-        v.push_back(s[i]);
-        subset(vv, v, s, i + 1);
-        v.pop_back();
-    }
-
-public:
+ public:
     vector<vector<int> > subsets(vector<int> &S) {
         sort(S.begin(), S.end());
 
         vector<vector<int>> vv;
         vector<int> v;
-        subset(vv, v, S, 0);
+
+        vv.push_back(v);
+        for (decltype(S.size()) i = 0; i < S.size(); i++) {
+            vector<int>::size_type len = vv.size();
+            for (decltype(S.size()) j = 0; j < len; j++) {
+                v = vv[j];
+                v.push_back(S[i]);
+                vv.push_back(v);
+            }
+        }
 
         return vv;
     }
