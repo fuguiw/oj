@@ -3,7 +3,7 @@
 using namespace std;
 
 class Solution {
- public:
+public:
     vector<vector<int> > subsets(vector<int> &S) {
         sort(S.begin(), S.end());
 

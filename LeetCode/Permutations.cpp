@@ -4,35 +4,26 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> v;
-    vector<vector<int> > vv;
+    vector<vector<int> > permute(vector<int> &num) {
+        vector<vector<int>> vv;
+        vector<int> v;
+        auto len = num.size();
+        vv.push_back(v);
 
-    void f(vector<int> &num, int *visit, int n) {
-        int len = num.size();
+        for (vector<int>::size_type i = 0; i < len; i++) {
+            for (v = vv.front(); v.size() <= i; v = vv.front()) {
+                for (vector<int>::size_type j = 0; j < v.size(); j++) {
+                    vector<int> tmp(v);
 
-        if (n == len) {
-            vv.push_back(v);
-            return ;
-        }
+                    tmp.insert(tmp.begin() + j, num[i]);
+                    vv.push_back(tmp);
+                }
 
-        for (int i = 0; i < len; i++) {
-            if (!visit[i]) {
-                v.push_back(num[i]);
-                visit[i] = 1;
-                f(num, visit, n + 1);
-                visit[i] = 0;
-                v.pop_back();
+                v.insert(v.end(), num[i]);
+                vv.push_back(v);
+                vv.erase(vv.begin());
             }
         }
-    }
-
-    vector<vector<int> > permute(vector<int> &num) {
-        int len = num.size();
-        int visit[len];
-
-        memset(visit, 0, sizeof(visit));
-
-        f(num, visit, 0);
 
         return vv;
     }
@@ -50,9 +41,11 @@ int main(int argc, char *argv[])
 
     vv = sol.permute(v);
 
-    for (int i = 0; i < vv.size(); i++)
+    for (int i = 0; i < vv.size(); i++) {
         for (int j = 0; j < vv[0].size(); j++)
-            cout << vv[i][j] << endl;
+            cout << vv[i][j];
+        cout << endl;
+    }
 
     return 0;
 }
