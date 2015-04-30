@@ -3,28 +3,22 @@
 using namespace std;
 
 class Solution {
+    void permute(vector<vector<int>> &vv, vector<int> num, vector<int>::size_type i) {
+        if (i == num.size()) {
+            vv.push_back(num);
+            return ;
+        }
+
+        for (vector<int>::size_type j = i; j < num.size(); j++) {
+            swap(num[i], num[j]);
+            permute(vv, num, i + 1);
+        }
+    }
+
 public:
     vector<vector<int> > permute(vector<int> &num) {
         vector<vector<int>> vv;
-        vector<int> v;
-        auto len = num.size();
-        vv.push_back(v);
-
-        for (vector<int>::size_type i = 0; i < len; i++) {
-            for (v = vv.front(); v.size() <= i; v = vv.front()) {
-                for (vector<int>::size_type j = 0; j < v.size(); j++) {
-                    vector<int> tmp(v);
-
-                    tmp.insert(tmp.begin() + j, num[i]);
-                    vv.push_back(tmp);
-                }
-
-                v.insert(v.end(), num[i]);
-                vv.push_back(v);
-                vv.erase(vv.begin());
-            }
-        }
-
+        permute(vv, num, 0);
         return vv;
     }
 };
