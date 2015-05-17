@@ -37,13 +37,13 @@ public:
                 v.push_back(cur->val);
                 if (cur->right)
                     st.push(cur->right);
-                pre = cur;
             }
         }
 
         return v;
-    }
+    }   
 };
+
 
 int main(int argc, char *argv[])
 {
@@ -51,10 +51,18 @@ int main(int argc, char *argv[])
     TreeNode n1(1);
     TreeNode n2(2);
     TreeNode n3(3);
+    TreeNode n4(4);
+    TreeNode n5(5);
+    TreeNode n6(6);
+    TreeNode n7(7);
     vector<int> v;
 
-    n1.right = &n2;
-    n2.left = &n3;
+    n1.left = &n2;
+    n1.right = &n3;
+    n2.left = &n4;
+    n2.right = &n5;
+    n3.left = &n6;
+    n3.right = &n7;
 
     v = sol.inorderTraversal(&n1);
 
