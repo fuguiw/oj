@@ -19,6 +19,7 @@ public:
                 s.pop();
                 int j = (s.empty() ? -1 : s.top());
                 ret = max(ret, h * (i - j - 1));
+                cout << h * (i - j - 1) << endl;
             }
         }
 
@@ -29,7 +30,7 @@ public:
 int main(int argc, char *argv[])
 {
     Solution sol;
-    vector<int> v;
+    vector<int> v{2,1,5,6,2,3};
     cout << sol.largestRectangleArea(v) << endl;
     return 0;
 }
