@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     vv = sol.solveNQueens(2);
     vv = sol.solveNQueens(3);
     vv = sol.solveNQueens(4);
-    vv = sol.solveNQueens(5);
+    /* vv = sol.solveNQueens(5); */
 
     for (int i = 0; i < vv.size(); i++)
         for (int j = 0; j < vv[0].size(); j++)
