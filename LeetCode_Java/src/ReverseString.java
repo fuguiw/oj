@@ -1,4 +1,4 @@
-public class reverseString {
+public class ReverseString {
     public void reverseString(char[] s) {
         for (int i = 0; i < s.length >>> 1; i++) {
             char tmp = s[i];
