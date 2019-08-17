@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"net/http"
+)
+
 func searchMatrix(matrix [][]int, target int) bool {
 	if matrix == nil || len(matrix) == 0 {
 		return false
@@ -19,4 +24,25 @@ func searchMatrix(matrix [][]int, target int) bool {
 	}
 
 	return false
+}
+
+type ha struct {
+}
+
+type haer interface {
+	wuha()
+}
+
+func (h *ha) wuha() {
+	fmt.Println("wuha!")
+}
+
+func hello(res http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(res, "hello wuha\n")
+}
+
+func main() {
+	http.HandleFunc("/", hello)
+	http.ListenAndServe("localhost:4444", nil)
+
 }
