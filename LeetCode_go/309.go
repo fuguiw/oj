@@ -1,24 +1,23 @@
 package main
 
-func maxProfit(prices []int) int {
-	profits := make([]int, len(prices))
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
 
-	result := 0
+func maxProfit(prices []int) int {
+	if prices == nil || len(prices) == 0 {
+		return 0
+	}
+	buy := -prices[0]
+	sell := 0
+	cooldown := 0
+
 	for i := 1; i < len(prices); i++ {
-		profits[i] = profits[i-1]
-		for j := i - 1; j >= 0; j-- {
-			tmp := prices[i] - prices[j]
-			if j > 1 {
-				tmp += profits[j-2]
-			}
-			if tmp > profits[i] {
-				profits[i] = tmp
-			}
-			if profits[i] > result {
-				result = profits[i]
-			}
-		}
+		buy, sell, cooldown = max(buy, cooldown-prices[i]), max(buy+prices[i], sell), sell
 	}
 
-	return result
+	return max(sell, cooldown)
 }
