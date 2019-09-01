@@ -8,29 +8,25 @@ func max(i, j int) int {
 }
 
 func trap(height []int) int {
+	left, right := 0, len(height)-1
+	lmax, rmax := 0, 0
 	result := 0
-	for i := 1; i < len(height); i++ {
-		if height[i-1] > height[i] {
-			continue
-		}
-
-		h := 0
-		for j := i - 2; j >= 0; j-- {
-			if height[j] >= height[i] {
-				h = height[i]
-				break
+	for left < right {
+		if height[left] < height[right] {
+			if lmax < height[left] {
+				lmax = height[left]
+			} else {
+				result += lmax - height[left]
 			}
-			h = max(h, height[j])
-		}
-
-		for j := i - 1; j >= 0; j-- {
-			if height[j] >= h {
-				break
+			left++
+		} else {
+			if rmax < height[right] {
+				rmax = height[right]
+			} else {
+				result += rmax - height[right]
 			}
-			result += h - height[j]
-			height[j] = h
+			right--
 		}
 	}
-
 	return result
 }
