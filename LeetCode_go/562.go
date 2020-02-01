@@ -2,58 +2,49 @@ package main
 
 import "fmt"
 
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
 func longestLine(M [][]int) int {
+	d := make([][][]int, len(M))
+	for i := 0; i < len(d); i++ {
+		d[i] = make([][]int, len(M[i]))
+		for j := 0; j < len(d[i]); j++ {
+			d[i][j] = make([]int, 4)
+		}
+	}
+
 	ans := 0
-
-	var dfs func(m [][]int, move [][]int, i, j int, l *int)
-	dfs = func(m [][]int, move [][]int, i, j int, l *int) {
-		for k := 0; k < 2; k++ {
-			ti := i + move[k][0]
-			tj := j + move[k][1]
-			if ti >= 0 && ti < len(m) && tj >= 0 && tj < len(m[ti]) && m[ti][tj] == 1 {
-				m[ti][tj] = 0
-				*l++
-				if *l > ans {
-					ans = *l
-				}
-				dfs(m, move, ti, tj, l)
-			}
-		}
-	}
-
-	f := func(m [][]int, move [][]int) {
-		for i := 0; i < len(m); i++ {
-			for j := 0; j < len(m[i]); j++ {
-				if m[i][j] == 1 {
-					m[i][j] = 0
-					l := 1
-					if l > ans {
-						ans = l
-					}
-					dfs(m, move, i, j, &l)
-				}
-			}
-		}
-	}
-
-	m := make([][]int, len(M))
 	for i := 0; i < len(M); i++ {
-		m[i] = make([]int, len(M[i]))
-	}
-
-	init := func(m [][]int, M [][]int) {
-		for i := 0; i < len(M); i++ {
-			copy(m[i], M[i])
+		for j := 0; j < len(M[i]); j++ {
+			if M[i][j] == 1 {
+				d[i][j][0] = 1
+				if j > 0 {
+					d[i][j][0] += d[i][j-1][0]
+				}
+				ans = max(ans, d[i][j][0])
+				d[i][j][1] = 1
+				if i > 0 {
+					d[i][j][1] += d[i-1][j][1]
+				}
+				ans = max(ans, d[i][j][1])
+				d[i][j][2] = 1
+				if i > 0 && j > 0 {
+					d[i][j][2] += d[i-1][j-1][2]
+				}
+				ans = max(ans, d[i][j][2])
+				d[i][j][3] = 1
+				if i > 0 && j < len(M[i])-1 {
+					d[i][j][3] += d[i-1][j+1][3]
+				}
+				ans = max(ans, d[i][j][3])
+			}
 		}
 	}
-	init(m, M)
-	f(m, [][]int{{0, -1}, {0, 1}})
-	init(m, M)
-	f(m, [][]int{{-1, 0}, {1, 0}})
-	init(m, M)
-	f(m, [][]int{{-1, -1}, {1, 1}})
-	init(m, M)
-	f(m, [][]int{{-1, 1}, {1, -1}})
 
 	return ans
 }
