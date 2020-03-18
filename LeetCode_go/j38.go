@@ -1,12 +1,12 @@
 package main
 
-func find(s string, ans *[]string, idx int, m *map[string]bool) {
+func find(s string, ans *[]string, idx int, m map[string]bool) {
 	if idx == len(s) {
-		if (*m)[s] {
+		if m[s] {
 			return
 		}
 		*ans = append(*ans, s)
-		(*m)[s] = true
+		m[s] = true
 		return
 	}
 
@@ -20,6 +20,6 @@ func find(s string, ans *[]string, idx int, m *map[string]bool) {
 func permutation(s string) []string {
 	var ans []string
 	m := make(map[string]bool)
-	find(s, &ans, 0, &m)
+	find(s, &ans, 0, m)
 	return ans
 }
