@@ -1,31 +1,20 @@
 package main
 
-import (
-	"strings"
-)
-
 func wordBreak(s string, wordDict []string) bool {
-	d := make([][]bool, len(s))
-	for i := range d {
-		d[i] = make([]bool, len(s))
-	}
-
+	m := make(map[string]bool)
 	for _, word := range wordDict {
-		idx := strings.Index(s, word)
-		for pos := 0; idx != -1; {
-			d[pos+idx][pos+idx+len(word)-1] = true
-			pos += idx + 1
-			idx = strings.Index(s[pos:], word)
-		}
+		m[word] = true
 	}
 
-	for i := 0; i < len(s); i++ {
-		for j := i + 1; j < len(s); j++ {
-			for k := i; k < j; k++ {
-				d[i][j] = d[i][j] || (d[i][k] && d[k+1][j])
+	d := make([]bool, len(s)+1)
+	d[0] = true
+	for i := 0; i <= len(s); i++ {
+		for j := 0; j < i; j++ {
+			if _, ok := m[s[j:i]]; ok && d[j] {
+				d[i] = true
 			}
 		}
 	}
 
-	return d[0][len(s)-1]
+	return d[len(s)]
 }
