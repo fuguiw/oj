@@ -16,5 +16,4 @@
 *.out
 *.app
 
-.idea
-**/*.xml
+idea
