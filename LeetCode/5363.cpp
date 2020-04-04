@@ -20,8 +20,6 @@ public:
                 }
                 dp[i][j] = tmp + satisfaction[i - 1] * j;
 
-                cout << i << "," << j << endl;
-                cout << dp[i][j] << endl;
                 ans = max(ans, dp[i][j]);
             }
         }
