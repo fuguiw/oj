@@ -31,7 +31,7 @@ func countRoutes(locations []int, start int, finish int, fuel int) int {
 				next := f + abs(locations[i]-locations[j])
 				//fmt.Println(i, j, f, pre)
 				if i == j || next > fuel {
-					continue
+n					continue
 				}
 				dp[j][next] = (dp[j][next] + dp[i][f]) % mod
 			}
