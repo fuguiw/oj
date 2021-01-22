@@ -1,30 +1,18 @@
 package main
 
-import "fmt"
-
 func addToArrayForm(A []int, K int) []int {
-	var k []int
-	for K > 0 {
-		k = append([]int{K % 10}, k...)
-		K /= 10
-	}
-	fmt.Println(k)
-
+	n := len(A)
+	A[n-1] += K
+	p := 0
 	var ans []int
-	i, j, p := len(A)-1, len(k)-1, 0
-	for ; i >= 0 || j >= 0; i, j = i-1, j-1 {
-		w := p
-		if i >= 0 {
-			w += A[i]
-		}
-		if j >= 0 {
-			w += k[j]
-		}
+	for i := len(A) - 1; i >= 0; i-- {
+		w := A[i] + p
 		ans = append([]int{w % 10}, ans...)
 		p = w / 10
 	}
-	if p > 0 {
-		ans = append([]int{1}, ans...)
+	for p > 0 {
+		ans = append([]int{p % 10}, ans...)
+		p /= 10
 	}
 
 	return ans
