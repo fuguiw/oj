@@ -7,27 +7,15 @@ func max(x, y int) int {
 	return y
 }
 
-func longestOnes(A []int, K int) int {
-	ans := 0
-	k := K
-	for begin, end := 0, 0; end < len(A); end++ {
-		if A[end] == 0 {
-			if k > 0 {
-				k--
-			} else {
-				for ; begin <= end; begin++ {
-					if A[begin] == 0 {
-						begin++
-						break
-					}
-				}
-			}
+func longestOnes(A []int, K int) (ans int) {
+	var left, lsum, rsum int
+	for right, a := range A {
+		rsum += 1 - a
+		for lsum < rsum-K {
+			lsum += 1 - A[left]
+			left++
 		}
-		ans = max(ans, end-begin)
-		if A[end] == 1 || k >= 0 {
-			ans = max(ans, end-begin+1)
-		}
+		ans = max(ans, right-left+1)
 	}
-
 	return ans
 }
