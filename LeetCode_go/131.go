@@ -18,9 +18,7 @@ func partition(s string) [][]string {
 	var find func([]string, int)
 	find = func(p []string, i int) {
 		if i == len(s) {
-			ss := make([]string, len(p))
-			copy(ss, p)
-			ans = append(ans, ss)
+			ans = append(ans, append([]string(nil), p...))
 		}
 
 		var str []byte
