@@ -26,17 +26,6 @@ func isScramble(s1, s2 string) bool {
 			return 1
 		}
 
-		freq := [26]int{}
-		for i, ch := range x {
-			freq[ch-'a']++
-			freq[y[i]-'a']--
-		}
-		for _, f := range freq[:] {
-			if f != 0 {
-				return 0
-			}
-		}
-
 		for i := 1; i < length; i++ {
 			if dfs(i1, i2, i) == 1 && dfs(i1+i, i2+i, length-i) == 1 {
 				return 1
