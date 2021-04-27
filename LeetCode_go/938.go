@@ -9,22 +9,14 @@ package main
  * }
  */
 func rangeSumBST(root *TreeNode, low int, high int) int {
-	ans := 0
-
-	var dfs func(r *TreeNode)
-	dfs = func(r *TreeNode) {
-		if r == nil {
-			return
-		}
-		dfs(r.Left)
-		if r.Val > high {
-			return
-		}
-		if r.Val >= low {
-			ans += r.Val
-		}
-		dfs(r.Right)
+	if root == nil {
+		return 0
 	}
-	dfs(root)
-	return ans
+	if root.Val < low {
+		return rangeSumBST(root.Right, low, high)
+	}
+	if root.Val > high {
+		return rangeSumBST(root.Left, low, high)
+	}
+	return root.Val + rangeSumBST(root.Left, low, high) + rangeSumBST(root.Right, low, high)
 }
