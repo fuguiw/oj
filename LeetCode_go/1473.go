@@ -10,8 +10,6 @@ func min(x, y int) int {
 }
 
 func minCost(houses []int, cost [][]int, m int, n int, target int) int {
-	//dp[i][j][k]  = min(dp[i-1][j][k], dp[i-1][x][k-1]) + cost[i][j]
-
 	dp := make([][][]int, m)
 	for i := range dp {
 		dp[i] = make([][]int, n)
