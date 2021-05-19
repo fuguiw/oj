@@ -9,25 +9,14 @@ func topKFrequent(words []string, k int) []string {
 		m[word]++
 	}
 
-	type node struct {
-		word  string
-		count int
-	}
-
-	nodes := make([]node, 0, len(words))
-	for k, v := range m {
-		nodes = append(nodes, node{k, v})
+	nodes := make([]string, 0, len(words))
+	for word, _ := range m {
+		nodes = append(nodes, word)
 	}
 	sort.Slice(nodes, func(i, j int) bool {
-		if nodes[i].count == nodes[j].count {
-			return nodes[i].word < nodes[j].word
-		}
-		return nodes[i].count > nodes[j].count
+		s, t := nodes[i], nodes[j]
+		return m[s] > m[t] || m[s] == m[t] && s < t
 	})
 
-	ans := make([]string, 0, k)
-	for i := 0; i < k; i++ {
-		ans = append(ans, nodes[i].word)
-	}
-	return ans
+	return nodes[:k]
 }
