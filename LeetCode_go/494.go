@@ -1,19 +1,19 @@
 package main
 
-func find(nums []int, s, sum, index int, result *int) {
-	if index == len(nums) {
-		if s == sum {
-			*result++
+func findTargetSumWays(nums []int, target int) int {
+	ans := 0
+	var find func(int, int)
+	find = func(idx, sum int) {
+		if idx == len(nums) {
+			if sum == target {
+				ans++
+			}
+			return
 		}
-		return
+		find(idx+1, sum+nums[idx])
+		find(idx+1, sum-nums[idx])
 	}
+	find(0, 0)
 
-	find(nums, s, sum+nums[index], index+1, result)
-	find(nums, s, sum-nums[index], index+1, result)
-}
-
-func findTargetSumWays(nums []int, S int) int {
-	result := 0
-	find(nums, S, 0, 0, &result)
-	return result
+	return ans
 }
